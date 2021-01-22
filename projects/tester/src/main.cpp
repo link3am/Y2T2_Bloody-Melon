@@ -1,3 +1,5 @@
+//I am Jin Chan
+
 #include <Logging.h>
 #include <iostream>
 //
