@@ -30,10 +30,3 @@
 *.exe
 *.out
 *.app
-
-#sam
-**/.vs/**
-**/bin/**
-**/dependencies/**
-**/modules/**
-**/obj/**
