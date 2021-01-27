@@ -120,35 +120,35 @@ void Player::phyUpdate(float dt)
 }
 void Player::mapping()
 {
-	if (pos.x > 5.0f && pos.x < 11.0f && pos.y >= 4.0f)
+	if (pos.x > 5.0f && pos.x < 11.0f && pos.y >= 3.9f)
 	{
 		groundHight = 4.0f;
 
 	}
-	else if (pos.x > 1.0f && pos.x < 3.0f && pos.y >= 2.0f)
+	else if (pos.x > 1.0f && pos.x < 3.0f && pos.y >= 1.9f)
 	{
 		groundHight = 2.0f;
 	}
-	else if (pos.x > 12.0f && pos.x < 18.0f && pos.y >= 3.0f)
+	else if (pos.x > 12.0f && pos.x < 18.0f && pos.y >= 2.9f)
 	{
 		groundHight = 3.0f;
 
 	}
-	else if (pos.x > 19.0f && pos.x < 19.8f && pos.y >= 1.5f)
+	else if (pos.x > 19.0f && pos.x < 19.8f && pos.y >= 1.4f)
 	{
 		groundHight = 1.5f;
 
 	}
-	else if (pos.x > 21.5f && pos.x < 23.5f && pos.y >= 1.0f)
+	else if (pos.x > 21.5f && pos.x < 23.5f && pos.y >= 0.9f)
 	{
 		groundHight = 1.0f;
 	}
-	else if (pos.x > 25.6f && pos.x < 26.4f && pos.y >= 1.5f)
+	else if (pos.x > 25.6f && pos.x < 26.4f && pos.y >= 1.4f)
 	{//can
 		groundHight = 1.5f;
 
 	}
-	else if (pos.x > 30.7f && pos.x < 32.4f && pos.y >= 0.7f)
+	else if (pos.x > 30.7f && pos.x < 32.4f && pos.y >= 0.6f)
 	{
 		groundHight = 0.7f;
 
