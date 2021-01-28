@@ -124,6 +124,8 @@ int main()
 		return 1;
 	
 	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDebugMessageCallback(GlDebugMessage, nullptr);
 	glEnable(GL_TEXTURE_2D);//textrue
 	glEnable(GL_DEPTH_TEST);	// GL states
