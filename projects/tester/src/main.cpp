@@ -67,7 +67,6 @@ void GlfwWindowResizedCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 	//camera->ResizeWindow(width, height);
 }
-
 bool initGLFW() {
 	if (glfwInit() == GLFW_FALSE) {
 		LOG_ERROR("Failed to initialize GLFW");
@@ -87,7 +86,6 @@ bool initGLFW() {
 
 	return true;
 }
-
 bool initGLAD()
 {
 	if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0) {
@@ -96,8 +94,6 @@ bool initGLAD()
 	}
 	return true;
 }
-
-
 void RenderVAO(const Shader::sptr& shader, const VertexArrayObject::sptr& vao, const Camera::sptr& camera, const Transform::sptr& transform)
 {
 	shader->SetUniformMatrix("u_ModelViewProjection", camera->GetViewProjection() * transform->LocalTransform());
@@ -117,130 +113,129 @@ int main()
 		return 1;
 	if (!initGLAD())
 		return 1;
-	// Let OpenGL know that we want debug output, and route it to our handler function
+	
 	glEnable(GL_DEBUG_OUTPUT);
 	glDebugMessageCallback(GlDebugMessage, nullptr);
-	//textrue
-	glEnable(GL_TEXTURE_2D);
-	// GL states
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);//textrue
+	glEnable(GL_DEPTH_TEST);	// GL states
 	//glEnable(GL_CULL_FACE);
 
 
-	static  entt::registry ecs;
+	static entt::registry ecs;
 
 	//////////////////////////////////////////mod and transform
-	//melon = 1.6m
-	Player p1("watermelon.obj",
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(0.0f, -10.0f, 0.0f),
-		glm::vec3(1.0f, 1.0f, -1.0f),
-		"images/melon UV.png");
-	//enemyS
-	{
-		Enemy e1("knife.obj",
-			glm::vec3(1.0f, 0.0f, 0.0f),
+	
+		//melon = 1.6m
+		Player p1("watermelon.obj",
+			glm::vec3(0.0f, 0.0f, 0.0f),
 			glm::vec3(0.0f, -10.0f, 0.0f),
 			glm::vec3(1.0f, 1.0f, -1.0f),
-			"images/knife UV.png");
-		e1.setPatrolPoint(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(8.0f, 0.0f, 0.0f));
-		EnemyList.push_back(e1);
+			"images/melon UV.png");
+		///enemy set
+		{
+			Enemy e1("knife.obj",
+				glm::vec3(1.0f, 0.0f, 0.0f),
+				glm::vec3(0.0f, -10.0f, 0.0f),
+				glm::vec3(1.0f, 1.0f, -1.0f),
+				"images/knife UV.png");
+			e1.setPatrolPoint(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(8.0f, 0.0f, 0.0f));
+			EnemyList.push_back(e1);
 
-		Enemy e2("knife.obj",
-			glm::vec3(3.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, -10.0f, 0.0f),
-			glm::vec3(1.0f, 1.0f, -1.0f),
-			"images/knife UV.png");
-		e2.setPatrolPoint(glm::vec3(5.0f, 4.0f, 0.0f), glm::vec3(11.0f, 4.0f, 0.0f));
-		EnemyList.push_back(e2);
-		Enemy e3("knife.obj",
-			glm::vec3(3.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, -10.0f, 0.0f),
-			glm::vec3(1.0f, 1.0f, -1.0f),
-			"images/knife UV.png");
-		e3.setPatrolPoint(glm::vec3(22.f, 0.5f, 0.0f), glm::vec3(23.5f, 0.5f, 0.0f));
-		EnemyList.push_back(e3);
-		Enemy e4("knife.obj",
-			glm::vec3(3.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, -10.0f, 0.0f),
-			glm::vec3(1.0f, 1.0f, -1.0f),
-			"images/knife UV.png");
-		e4.setPatrolPoint(glm::vec3(12.f, 3.0f, 0.0f), glm::vec3(18.0f, 3.0f, 0.0f));
-		EnemyList.push_back(e4);
-		Enemy e5("knife.obj",
-			glm::vec3(26.0f, 1.5f, 0.0f),
-			glm::vec3(0.0f, -10.0f, 0.0f),
-			glm::vec3(1.0f, 1.0f, -1.0f),
-			"images/knife UV.png");
-		e5.setPatrolPoint(glm::vec3(25.6f, 1.5f, 0.0f), glm::vec3(26.4f, 1.5f, 0.0f));
-		EnemyList.push_back(e5);
-		Enemy e6("knife.obj",
-			glm::vec3(26.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, -10.0f, 0.0f),
-			glm::vec3(1.0f, 1.0f, -1.0f),
-			"images/knife UV.png");
-		e6.setPatrolPoint(glm::vec3(25.6f, 0.0f, 0.0f), glm::vec3(26.4f, 0.0f, 0.0f));
-		EnemyList.push_back(e6);
-		Enemy e7("knife.obj",
-			glm::vec3(34.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, -10.0f, 0.0f),
-			glm::vec3(1.0f, 1.0f, -1.0f),
-			"images/knife UV.png");
-		e7.setPatrolPoint(glm::vec3(34.6f, 0.0f, 0.0f), glm::vec3(36.4f, 0.0f, 0.0f));
-		EnemyList.push_back(e7);
-	}
-	//bullet
-	VertexArrayObject::sptr BulletMod = ObjLoader::LoadFromFile("seeds.obj");
-	Texture2D::sptr BulletTex = Texture2D::LoadFromFile("images/seeds UV.png");
+			Enemy e2("knife.obj",
+				glm::vec3(3.0f, 0.0f, 0.0f),
+				glm::vec3(0.0f, -10.0f, 0.0f),
+				glm::vec3(1.0f, 1.0f, -1.0f),
+				"images/knife UV.png");
+			e2.setPatrolPoint(glm::vec3(5.0f, 4.0f, 0.0f), glm::vec3(11.0f, 4.0f, 0.0f));
+			EnemyList.push_back(e2);
+			Enemy e3("knife.obj",
+				glm::vec3(3.0f, 0.0f, 0.0f),
+				glm::vec3(0.0f, -10.0f, 0.0f),
+				glm::vec3(1.0f, 1.0f, -1.0f),
+				"images/knife UV.png");
+			e3.setPatrolPoint(glm::vec3(22.f, 0.5f, 0.0f), glm::vec3(23.5f, 0.5f, 0.0f));
+			EnemyList.push_back(e3);
+			Enemy e4("knife.obj",
+				glm::vec3(3.0f, 0.0f, 0.0f),
+				glm::vec3(0.0f, -10.0f, 0.0f),
+				glm::vec3(1.0f, 1.0f, -1.0f),
+				"images/knife UV.png");
+			e4.setPatrolPoint(glm::vec3(12.f, 3.0f, 0.0f), glm::vec3(18.0f, 3.0f, 0.0f));
+			EnemyList.push_back(e4);
+			Enemy e5("knife.obj",
+				glm::vec3(26.0f, 1.5f, 0.0f),
+				glm::vec3(0.0f, -10.0f, 0.0f),
+				glm::vec3(1.0f, 1.0f, -1.0f),
+				"images/knife UV.png");
+			e5.setPatrolPoint(glm::vec3(25.6f, 1.5f, 0.0f), glm::vec3(26.4f, 1.5f, 0.0f));
+			EnemyList.push_back(e5);
+			Enemy e6("knife.obj",
+				glm::vec3(26.0f, 0.0f, 0.0f),
+				glm::vec3(0.0f, -10.0f, 0.0f),
+				glm::vec3(1.0f, 1.0f, -1.0f),
+				"images/knife UV.png");
+			e6.setPatrolPoint(glm::vec3(25.6f, 0.0f, 0.0f), glm::vec3(26.4f, 0.0f, 0.0f));
+			EnemyList.push_back(e6);
+			Enemy e7("knife.obj",
+				glm::vec3(34.0f, 0.0f, 0.0f),
+				glm::vec3(0.0f, -10.0f, 0.0f),
+				glm::vec3(1.0f, 1.0f, -1.0f),
+				"images/knife UV.png");
+			e7.setPatrolPoint(glm::vec3(34.6f, 0.0f, 0.0f), glm::vec3(36.4f, 0.0f, 0.0f));
+			EnemyList.push_back(e7);
+		}
+		//bullet
+		VertexArrayObject::sptr BulletMod = ObjLoader::LoadFromFile("seeds.obj");
+		Texture2D::sptr BulletTex = Texture2D::LoadFromFile("images/seeds UV.png");
 
-	//level set
-	{
-		Stuff deskTop("mapping.obj",
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/table UV.jpg");
-		stuffList.push_back(deskTop);
-		Stuff s1("clock.obj",
-			glm::vec3(2.0f, 0.0f, -0.7f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/clock UV.png");
-		stuffList.push_back(s1);
-		Stuff s2("cutting.obj",
-			glm::vec3(8.0f, 0.0f, -0.5f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/cutting UV.jpg");
-		stuffList.push_back(s2);
-		Stuff s3("microwave.obj",
-			glm::vec3(15.0f, 0.0f, -1.0f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/microwave UV.png");
-		stuffList.push_back(s3);
-		Stuff s4("can.obj",
-			glm::vec3(19.4f, 0.0f, -0.5f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/can UV.png");
-		stuffList.push_back(s4);
-		Stuff s5("dish.obj",
-			glm::vec3(23.f, 0.0f, -1.5f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/dish UV.png");
-		stuffList.push_back(s5);
-		Stuff s6("dish.obj",
-			glm::vec3(23.f, 0.5f, -1.5f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/dish UV.png");
-		stuffList.push_back(s6);
-		Stuff s7("can.obj",
-			glm::vec3(26.0f, 0.0f, -0.5f),
-			glm::vec3(0.0f, 40.0f, 0.0f),
-			"images/can UV.png");
-		stuffList.push_back(s7);
-		Stuff s8("pan.obj",
-			glm::vec3(30.0f, 0.0f, -3.0f),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/pan UV.png");
-		stuffList.push_back(s8);
-	}
+		//level set// platform
+		{
+			Stuff deskTop("mapping.obj",
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				"images/table UV.jpg");
+			stuffList.push_back(deskTop);
+			Stuff s1("clock.obj",
+				glm::vec3(2.0f, 0.0f, -0.7f),
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				"images/clock UV.png");
+			stuffList.push_back(s1);
+			Stuff s2("cutting.obj",
+				glm::vec3(8.0f, 0.0f, -0.5f),
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				"images/cutting UV.jpg");
+			stuffList.push_back(s2);
+			Stuff s3("microwave.obj",
+				glm::vec3(15.0f, 0.0f, -1.0f),
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				"images/microwave UV.png");
+			stuffList.push_back(s3);
+			Stuff s4("can.obj",
+				glm::vec3(19.4f, 0.0f, -0.5f),
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				"images/can UV.png");
+			stuffList.push_back(s4);
+			Stuff s5("dish.obj",
+				glm::vec3(23.f, 0.0f, -1.5f),
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				"images/dish UV.png");
+			stuffList.push_back(s5);
+			Stuff s6("dish.obj",
+				glm::vec3(23.f, 0.5f, -1.5f),
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				"images/dish UV.png");
+			stuffList.push_back(s6);
+			Stuff s7("can.obj",
+				glm::vec3(26.0f, 0.0f, -0.5f),
+				glm::vec3(0.0f, 40.0f, 0.0f),
+				"images/can UV.png");
+			stuffList.push_back(s7);
+			Stuff s8("pan.obj",
+				glm::vec3(30.0f, 0.0f, -3.0f),
+				glm::vec3(0.0f, 0.0f, 0.0f),
+				"images/pan UV.png");
+			stuffList.push_back(s8);
+		}
 	
 	//////////////////////////////////////////camera
 	camera = Camera::Create();

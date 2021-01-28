@@ -74,7 +74,7 @@ void Player::control(float dt)
 	{
 		if (isGround == true && pos.y >= 0.2)
 		{
-			melonTrans->MoveLocalFixed(0.0f, -0.1f, 0.0f);
+			melonTrans->MoveLocalFixed(0.0f, -0.2f, 0.0f);
 			isGround = false;
 			groundHight = 0.0f;
 		}
