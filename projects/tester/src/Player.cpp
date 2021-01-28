@@ -104,6 +104,7 @@ void Player::phyUpdate(float dt)
 		//test 
 		isGround = false;
 		position += acceleration * dt * dt;
+		std::cout << dt << std::endl;
 
 	}
 

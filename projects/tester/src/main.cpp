@@ -106,6 +106,8 @@ void RenderVAO(const Shader::sptr& shader, const VertexArrayObject::sptr& vao, c
 
 int main()
 {
+	bool pause = false;
+
 	vector<Enemy> EnemyList;
 	vector<Bullet> BulletList;
 	vector<Stuff> stuffList;
@@ -275,123 +277,132 @@ int main()
 
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
-		//DT
-		double thisFrame = glfwGetTime();
-		float dt = static_cast<float>(thisFrame - lastFrame);// delta time
+		if (pause == false) {
+			//DT
+			double thisFrame = glfwGetTime();
+			float dt = static_cast<float>(thisFrame - lastFrame);// delta time
 
-		double thisFrame2 = glfwGetTime();
-		float dt2 = static_cast<float>(thisFrame2 - lastFrame2);// delta time
+			double thisFrame2 = glfwGetTime();
+			float dt2 = static_cast<float>(thisFrame2 - lastFrame2);// delta time
 
-		glClearColor(0.08f, 0.17f, 0.31f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		//shader
-		//Lv1.levelRender(camera);
-		for (int s = 0; s < stuffList.size(); s++) {
+			glClearColor(0.08f, 0.17f, 0.31f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+			//shader
+			//Lv1.levelRender(camera);
+			for (int s = 0; s < stuffList.size(); s++) {
 				stuffList[s].Render(camera);
 
-		}
-		
-		//
-		if (!p1.IsDeath()) {
-			p1.Render(camera);
-			//p1.blocker();
-
-		}
-		else {
-			EnemyList[0].Render(camera);
-		}
-
-		for (int i = 0; i < EnemyList.size(); i++) {
-			EnemyList[i].Render(camera);
-			EnemyList[i].AIPatrol();
-		}
-		for (vector<Bullet>::iterator it = BulletList.begin(); it != BulletList.end();)
-		{
-			it->Render(camera);
-			it->projectile();
-			if (it->IsDeath() == true)
-				it = BulletList.erase(it);
-			else {
-				it++;
 			}
-		}
 
-		for (vector<Enemy>::iterator it = EnemyList.begin(); it != EnemyList.end();)
-		{
-			if (it->IsDeath() == true)
-				it = EnemyList.erase(it);
-			else {
-				it++;
-			}
-		}
-		if ((thisFrame2 - lastFrameTime2)> shootLimit) {
-			CanShoot = true;
-		}
-
-		
-
-		//fps limit in this if()
-		if ((thisFrame - lastFrameTime) >= fpsLimit)
-		{
-			//player part
+			//
 			if (!p1.IsDeath()) {
-				p1.phyUpdate(dt);
-				camera->cameraMove(window, p1.getPlayervec3());
-				if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS && CanShoot) {
-					if (p1.melonTrans->GetLocalScale().x > 0) {
-						Bullet b(BulletMod,
-							p1.melonTrans->GetLocalPosition(),
-							glm::vec3(0.0f, -10.0f, 0.0f),
-							glm::vec3(1.0f, 1.0f, -1.0f),
-							BulletTex,
-							true);
-						BulletList.push_back(b);
-					}
-					else {
-						Bullet b(BulletMod,
-							p1.melonTrans->GetLocalPosition(),
-							glm::vec3(0.0f, -10.0f, 0.0f),
-							glm::vec3(-1.0f, 1.0f, -1.0f),
-							BulletTex,
-							false);
-						BulletList.push_back(b);
-					}
-					lastFrameTime2 = thisFrame2;
-					CanShoot = false;
-				}
+				p1.Render(camera);
+				//p1.blocker();
 
-				for (int y = 0; y < EnemyList.size(); y++) {
-					if (HitCheck::AABB(p1.getHitBox(), EnemyList[y].getHitBox())) {
-						p1.death = true;
-						UI win(WinTitle,
-							p1.melonTrans->GetLocalPosition(),
-							glm::vec3(0.0f, -10.0f, 0.0f),
-							glm::vec3(1.0f, 1.0f, -1.0f),
-							WinTitleTex);
-						UIList.push_back(win);
-					}
-				}
-
-				
 			}
-			for (int x = 0; x < BulletList.size(); x++) {
-				for (int y = 0; y < EnemyList.size(); y++) {
-					if (HitCheck::AABB(BulletList[x].getHitBox(), EnemyList[y].getHitBox())) {
-						BulletList[x].death = true;
-						EnemyList[y].death = true;
-					}
+			else {
+				UIList[0].Render(camera);
+			}
+
+			for (int i = 0; i < EnemyList.size(); i++) {
+				EnemyList[i].Render(camera);
+				EnemyList[i].AIPatrol();
+			}
+			for (vector<Bullet>::iterator it = BulletList.begin(); it != BulletList.end();)
+			{
+				it->Render(camera);
+				it->projectile();
+				if (it->IsDeath() == true)
+					it = BulletList.erase(it);
+				else {
+					it++;
 				}
 			}
 
-			lastFrameTime = thisFrame;
+			for (vector<Enemy>::iterator it = EnemyList.begin(); it != EnemyList.end();)
+			{
+				if (it->IsDeath() == true)
+					it = EnemyList.erase(it);
+				else {
+					it++;
+				}
+			}
+			if ((thisFrame2 - lastFrameTime2) > shootLimit) {
+				CanShoot = true;
+			}
+			//fps limit in this if()
+			if ((thisFrame - lastFrameTime) >= fpsLimit)
+			{
+				//player part
+				if (!p1.IsDeath()) {
+					p1.phyUpdate(dt);
+					camera->cameraMove(window, p1.getPlayervec3());
+					if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS && CanShoot) {
+						if (p1.melonTrans->GetLocalScale().x > 0) {
+							Bullet b(BulletMod,
+								p1.melonTrans->GetLocalPosition(),
+								glm::vec3(0.0f, -10.0f, 0.0f),
+								glm::vec3(1.0f, 1.0f, -1.0f),
+								BulletTex,
+								true);
+							BulletList.push_back(b);
+						}
+						else {
+							Bullet b(BulletMod,
+								p1.melonTrans->GetLocalPosition(),
+								glm::vec3(0.0f, -10.0f, 0.0f),
+								glm::vec3(-1.0f, 1.0f, -1.0f),
+								BulletTex,
+								false);
+							BulletList.push_back(b);
+						}
+						lastFrameTime2 = thisFrame2;
+						CanShoot = false;
+					}
+
+					for (int y = 0; y < EnemyList.size(); y++) {
+						if (HitCheck::AABB(p1.getHitBox(), EnemyList[y].getHitBox())) {
+							p1.death = true;
+							UI win(WinTitle,
+								glm::vec3(p1.melonTrans->GetLocalPosition().x - 7, p1.melonTrans->GetLocalPosition().y - 2, p1.melonTrans->GetLocalPosition().z + 2.5),
+								glm::vec3(0.0f, 0.0f, 0.0f),
+								glm::vec3(20.0f, 20.0f, -1.0f),
+								WinTitleTex);
+							UIList.push_back(win);
+						}
+					}
+
+
+				}
+				for (int x = 0; x < BulletList.size(); x++) {
+					for (int y = 0; y < EnemyList.size(); y++) {
+						if (HitCheck::AABB(BulletList[x].getHitBox(), EnemyList[y].getHitBox())) {
+							BulletList[x].death = true;
+							EnemyList[y].death = true;
+						}
+					}
+				}
+
+				lastFrameTime = thisFrame;
+			}
+
+			timer = glfwGetTime();
+			//std::cout << timer2 <<std::endl;
+			lastFrame = thisFrame;
+			lastFrame2 = thisFrame2;
+		}
+		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+			pause = true;
+
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+			pause = false;
+
 		}
 		glfwSwapBuffers(window);
-
-		timer = glfwGetTime();
-		//std::cout << timer2 <<std::endl;
-		lastFrame = thisFrame;
-		lastFrame2 = thisFrame2;
 	}
 
 
