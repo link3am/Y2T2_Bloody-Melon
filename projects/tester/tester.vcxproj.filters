@@ -64,6 +64,7 @@
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\HitCheck.h" />
     <ClInclude Include="src\stuff.h" />
+    <ClInclude Include="src\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Gameplay\Camera.cpp">
@@ -99,5 +100,6 @@
     <ClCompile Include="src\Graphics\ITexture.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\stuff.cpp" />
+    <ClCompile Include="src\UI.cpp" />
   </ItemGroup>
 </Project>

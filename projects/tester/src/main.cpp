@@ -21,6 +21,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "UI.h"
 
 #include "Graphics/IBuffer.h"
 #include "Graphics/VertexBuffer.h"
@@ -108,6 +109,8 @@ int main()
 	vector<Enemy> EnemyList;
 	vector<Bullet> BulletList;
 	vector<Stuff> stuffList;
+	vector<UI> UIList;
+
 	Logger::Init(); // We'll borrow the logger from the toolkit, but we need to initialize it
 	if (!initGLFW())
 		return 1;
@@ -188,54 +191,59 @@ int main()
 		VertexArrayObject::sptr BulletMod = ObjLoader::LoadFromFile("seeds.obj");
 		Texture2D::sptr BulletTex = Texture2D::LoadFromFile("images/seeds UV.png");
 
-		//level set// platform
-		{
-			Stuff deskTop("mapping.obj",
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				"images/table UV.jpg");
-			stuffList.push_back(deskTop);
-			Stuff s1("clock.obj",
-				glm::vec3(2.0f, 0.0f, -0.7f),
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				"images/clock UV.png");
-			stuffList.push_back(s1);
-			Stuff s2("cutting.obj",
-				glm::vec3(8.0f, 0.0f, -0.5f),
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				"images/cutting UV.jpg");
-			stuffList.push_back(s2);
-			Stuff s3("microwave.obj",
-				glm::vec3(15.0f, 0.0f, -1.0f),
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				"images/microwave UV.png");
-			stuffList.push_back(s3);
-			Stuff s4("can.obj",
-				glm::vec3(19.4f, 0.0f, -0.5f),
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				"images/can UV.png");
-			stuffList.push_back(s4);
-			Stuff s5("dish.obj",
-				glm::vec3(23.f, 0.0f, -1.5f),
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				"images/dish UV.png");
-			stuffList.push_back(s5);
-			Stuff s6("dish.obj",
-				glm::vec3(23.f, 0.5f, -1.5f),
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				"images/dish UV.png");
-			stuffList.push_back(s6);
-			Stuff s7("can.obj",
-				glm::vec3(26.0f, 0.0f, -0.5f),
-				glm::vec3(0.0f, 40.0f, 0.0f),
-				"images/can UV.png");
-			stuffList.push_back(s7);
-			Stuff s8("pan.obj",
-				glm::vec3(30.0f, 0.0f, -3.0f),
-				glm::vec3(0.0f, 0.0f, 0.0f),
-				"images/pan UV.png");
-			stuffList.push_back(s8);
-		}
+	//Win title
+	VertexArrayObject::sptr WinTitle = ObjLoader::LoadFromFile("win.obj");
+	Texture2D::sptr WinTitleTex = Texture2D::LoadFromFile("images/win UV.png");
+
+
+	//level set
+	{
+		Stuff deskTop("mapping.obj",
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			"images/table UV.jpg");
+		stuffList.push_back(deskTop);
+		Stuff s1("clock.obj",
+			glm::vec3(2.0f, 0.0f, -0.7f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			"images/clock UV.png");
+		stuffList.push_back(s1);
+		Stuff s2("cutting.obj",
+			glm::vec3(8.0f, 0.0f, -0.5f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			"images/cutting UV.jpg");
+		stuffList.push_back(s2);
+		Stuff s3("microwave.obj",
+			glm::vec3(15.0f, 0.0f, -1.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			"images/microwave UV.png");
+		stuffList.push_back(s3);
+		Stuff s4("can.obj",
+			glm::vec3(19.4f, 0.0f, -0.5f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			"images/can UV.png");
+		stuffList.push_back(s4);
+		Stuff s5("dish.obj",
+			glm::vec3(23.f, 0.0f, -1.5f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			"images/dish UV.png");
+		stuffList.push_back(s5);
+		Stuff s6("dish.obj",
+			glm::vec3(23.f, 0.5f, -1.5f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			"images/dish UV.png");
+		stuffList.push_back(s6);
+		Stuff s7("can.obj",
+			glm::vec3(26.0f, 0.0f, -0.5f),
+			glm::vec3(0.0f, 40.0f, 0.0f),
+			"images/can UV.png");
+		stuffList.push_back(s7);
+		Stuff s8("pan.obj",
+			glm::vec3(30.0f, 0.0f, -3.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			"images/pan UV.png");
+		stuffList.push_back(s8);
+	}
 	
 	//////////////////////////////////////////camera
 	camera = Camera::Create();
@@ -290,6 +298,10 @@ int main()
 			//p1.blocker();
 
 		}
+		else {
+			EnemyList[0].Render(camera);
+		}
+
 		for (int i = 0; i < EnemyList.size(); i++) {
 			EnemyList[i].Render(camera);
 			EnemyList[i].AIPatrol();
@@ -352,7 +364,12 @@ int main()
 				for (int y = 0; y < EnemyList.size(); y++) {
 					if (HitCheck::AABB(p1.getHitBox(), EnemyList[y].getHitBox())) {
 						p1.death = true;
-						cout << "Game Over!" << endl;
+						UI win(WinTitle,
+							p1.melonTrans->GetLocalPosition(),
+							glm::vec3(0.0f, -10.0f, 0.0f),
+							glm::vec3(1.0f, 1.0f, -1.0f),
+							WinTitleTex);
+						UIList.push_back(win);
 					}
 				}
 

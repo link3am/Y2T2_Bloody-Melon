@@ -128,6 +128,7 @@
     <ClInclude Include="src\entt\entt.hpp" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\stuff.h" />
+    <ClInclude Include="src\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bullet.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\stuff.cpp" />
+    <ClCompile Include="src\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\dependencies\glfw3\GLFW.vcxproj">
