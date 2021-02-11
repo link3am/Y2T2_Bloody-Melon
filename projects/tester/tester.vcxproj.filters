@@ -65,6 +65,7 @@
     <ClInclude Include="src\HitCheck.h" />
     <ClInclude Include="src\stuff.h" />
     <ClInclude Include="src\UI.h" />
+    <ClInclude Include="src\AudioEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Gameplay\Camera.cpp">
@@ -101,5 +102,12 @@
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\stuff.cpp" />
     <ClCompile Include="src\UI.cpp" />
+    <ClCompile Include="src\AudioEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fmod.dll" />
+    <None Include="fmodL.dll" />
+    <None Include="fmodstudio.dll" />
+    <None Include="fmodstudioL.dll" />
   </ItemGroup>
 </Project>

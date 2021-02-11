@@ -9,7 +9,7 @@ Player::Player(std::string MM,
 	glm::vec3 scale,
 	std::string melonUV
 ) {
-	melonMod = ObjLoader::LoadFromFile(MM);
+	melonMod = ObjLoader::LoadFromFile(MM); 
 	melonTrans = Transform::Create();
 	melonTrans->Transform::SetLocalPosition(location);
 	melonTrans->Transform::SetLocalRotation(rotation);

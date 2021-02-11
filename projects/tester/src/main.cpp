@@ -19,7 +19,7 @@
 
 #include "entt.hpp"
 #include "Player.h"
-#include "Enemy.h"
+#include "Enemy.h"  
 #include "Bullet.h"
 #include "UI.h"
 
@@ -27,7 +27,7 @@
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/VertexArrayObject.h"
 #include "Graphics/Shader.h"
-#include "Gameplay/Transform.h"
+#include "Gameplay/Transform.h" 
 #include "Graphics/MeshBuilder.h"
 #include "Graphics/ObjLoader.h"
 #include "Graphics/VertexTypes.h"
@@ -39,6 +39,8 @@
 #include "stuff.h"
 //Hit Cheak
 #include "HitCheck.h"
+//FMod
+#include "AudioEngine.h"
 using namespace std;
 
 void GlDebugMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
@@ -134,6 +136,12 @@ int main()
 
 	static entt::registry ecs;
 
+	//Setup FMOD
+	AudioEngine& engine = AudioEngine::Instance();
+	engine.Init(); 
+	engine.LoadBank("Master");
+
+
 	//////////////////////////////////////////mod and transform
 	
 		//melon = 1.6m
@@ -142,7 +150,7 @@ int main()
 			glm::vec3(0.0f, -10.0f, 0.0f),
 			glm::vec3(1.0f, 1.0f, -1.0f),
 			"images/melon UV.png");
-		///enemy set
+		///enemy set 
 		{
 			Enemy e1("knife.obj",
 				glm::vec3(1.0f, 0.0f, 0.0f),

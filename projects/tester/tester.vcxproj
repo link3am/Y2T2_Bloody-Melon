@@ -46,6 +46,8 @@
     <IntDir>..\..\obj\Debug-windows-x86_64\tester\</IntDir>
     <TargetName>tester</TargetName>
     <TargetExt>.exe</TargetExt>
+    <LibraryPath>$(SolutionDir)lib;$(VC_LibraryPath_x64)lib;$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(SolutionDir)inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -53,6 +55,8 @@
     <IntDir>..\..\obj\Release-windows-x86_64\tester\</IntDir>
     <TargetName>tester</TargetName>
     <TargetExt>.exe</TargetExt>
+    <LibraryPath>$(SolutionDir)lib;$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>$(SolutionDir)inc;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -68,7 +72,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;imagehlp.lib;..\..\dependencies\fmod\fmod64.lib;..\..\dependencies\gzip\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodstudioL_vc.lib; fmodL_vc.lib;opengl32.lib;imagehlp.lib;..\..\dependencies\fmod\fmod64.lib;..\..\dependencies\gzip\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>(xcopy /Q /E /Y /I /C "$(SolutionDir)shared_assets\dll" "$(SolutionDir)bin\Debug-windows-x86_64\$(ProjectName)")
@@ -96,7 +100,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;imagehlp.lib;..\..\dependencies\fmod\fmod64.lib;..\..\dependencies\gzip\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodstudio_vc.lib; fmod_vc.lib;opengl32.lib;imagehlp.lib;..\..\dependencies\fmod\fmod64.lib;..\..\dependencies\gzip\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>(xcopy /Q /E /Y /I /C "$(SolutionDir)shared_assets\dll" "$(SolutionDir)bin\Release-windows-x86_64\$(ProjectName)")
@@ -107,6 +111,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\AudioEngine.h" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\Graphics\ITexture.h" />
@@ -131,6 +136,7 @@
     <ClInclude Include="src\UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AudioEngine.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Gameplay\Camera.cpp" />
@@ -176,6 +182,12 @@
     <ProjectReference Include="..\..\modules\toolkit\toolkit.vcxproj">
       <Project>{AB7025F0-1750-A48B-2068-2F628CC60AED}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fmod.dll" />
+    <None Include="fmodL.dll" />
+    <None Include="fmodstudio.dll" />
+    <None Include="fmodstudioL.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

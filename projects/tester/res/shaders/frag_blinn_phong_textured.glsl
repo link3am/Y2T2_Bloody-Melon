@@ -1,3 +1,4 @@
+  
 #version 410
 
 layout(location = 0) in vec3 inPos;
@@ -8,7 +9,7 @@ layout(location = 3) in vec2 inUV;
 uniform sampler2D s_tex;
 
 
-out vec4 frag_color;
+out vec4 frag_color; 
 
 void main() {
 	
