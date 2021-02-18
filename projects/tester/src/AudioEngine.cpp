@@ -253,16 +253,20 @@ void AudioEvent::Restart()
 void AudioEvent::Stop()
 {
 	// Check if already playing
+	/*
 	FMOD_STUDIO_PLAYBACK_STATE* state = NULL;
 	if (m_EventInstance->getPlaybackState(state) == FMOD_STUDIO_PLAYBACK_PLAYING)
 	{
 		// Stop the event
 		m_EventInstance->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT);
 	}
+	*/
+	ErrorCheck(m_EventInstance->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT));
 }
 
 void AudioEvent::StopImmediately()
 {
+	/*
 	// Check if already playing
 	FMOD_STUDIO_PLAYBACK_STATE* state = NULL;
 	if (m_EventInstance->getPlaybackState(state) == FMOD_STUDIO_PLAYBACK_PLAYING)
@@ -270,6 +274,8 @@ void AudioEvent::StopImmediately()
 		// Stop the event
 		m_EventInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
 	}
+	*/
+	ErrorCheck(m_EventInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE));
 }
 
 bool AudioEvent::isPlaying()
@@ -402,7 +408,7 @@ AudioListener& AudioEngine::GetListener()
 	return m_Listener;
 }
 
-AudioEvent& AudioEngine::CreateEvent(const std::string& eventName, const std::string& GUID)
+AudioEvent& AudioEngine::CreateEvent1(const std::string& eventName, const std::string& GUID)
 {
 	// Get find event in file
 	FMOD::Studio::EventDescription* eventDescription = NULL;

@@ -187,7 +187,7 @@ public:
 	AudioListener& GetListener();
 
 	//// Events ////
-	AudioEvent& CreateEvent(const std::string& strEventName, const std::string& GUID);
+	AudioEvent& CreateEvent1(const std::string& strEventName, const std::string& GUID);
 	AudioEvent& GetEvent(const std::string& strEventName);
 
 	//// Global Parameters ////

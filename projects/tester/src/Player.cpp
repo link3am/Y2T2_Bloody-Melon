@@ -3,6 +3,7 @@
 #include <Graphics\Texture2DData.h>
 #include <Graphics\Texture2D.h>
 
+
 Player::Player(std::string MM,
 	glm::vec3 location,
 	glm::vec3 rotation,
@@ -46,7 +47,7 @@ void Player::glWindow(GLFWwindow* inWindow)
 {
 	window = inWindow;
 }
-void Player::control(float dt)
+void Player::control(float dt, AudioEvent& SE)
 {
 	
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
@@ -68,6 +69,7 @@ void Player::control(float dt)
 		if (isGround == true) {
 			position += 15 * dt;
 			isGround = false;
+			SE.Play();
 		}
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -81,11 +83,11 @@ void Player::control(float dt)
 	}
 	
 }
-void Player::phyUpdate(float dt)
+void Player::phyUpdate(float dt,AudioEvent& SE)
 {
 	mapping();
 
-	control(dt);
+	control(dt,SE);
 	blocker();
 	pos = melonTrans->GetLocalPosition();
 	//test

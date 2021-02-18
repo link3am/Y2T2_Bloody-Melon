@@ -46,8 +46,6 @@
     <IntDir>..\..\obj\Debug-windows-x86_64\tester\</IntDir>
     <TargetName>tester</TargetName>
     <TargetExt>.exe</TargetExt>
-    <LibraryPath>$(SolutionDir)lib;$(VC_LibraryPath_x64)lib;$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <IncludePath>$(SolutionDir)inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -55,24 +53,23 @@
     <IntDir>..\..\obj\Release-windows-x86_64\tester\</IntDir>
     <TargetName>tester</TargetName>
     <TargetExt>.exe</TargetExt>
-    <LibraryPath>$(SolutionDir)lib;$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <IncludePath>$(SolutionDir)inc;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\..\dependencies\glfw3\include;..\..\dependencies\glad\include;..\..\dependencies\imgui;..\..\dependencies\GLM\include;..\..\dependencies\stbs;..\..\dependencies\fmod;..\..\dependencies\spdlog\include;..\..\dependencies\entt;..\..\dependencies\cereal;..\..\dependencies\gzip;..\..\dependencies\tinyGLTF;..\..\dependencies\json;..\..\dependencies\bullet3\include;..\..\modules\FMODStudio\include;..\..\modules\NOU\include;..\..\modules\sampleModule\include;..\..\modules\toolkit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\..\dependencies\glfw3\include;..\..\dependencies\glad\include;..\..\dependencies\imgui;..\..\dependencies\GLM\include;..\..\dependencies\stbs;..\..\dependencies\fmod\include;..\..\dependencies\spdlog\include;..\..\dependencies\entt;..\..\dependencies\cereal;..\..\dependencies\gzip;..\..\dependencies\tinyGLTF;..\..\dependencies\json;..\..\dependencies\bullet3\include;..\..\modules\NOU\include;..\..\modules\sampleModule\include;..\..\modules\toolkit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>fmodstudioL_vc.lib; fmodL_vc.lib;opengl32.lib;imagehlp.lib;..\..\dependencies\fmod\fmod64.lib;..\..\dependencies\gzip\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;imagehlp.lib;..\..\dependencies\gzip\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>(xcopy /Q /E /Y /I /C "$(SolutionDir)shared_assets\dll" "$(SolutionDir)bin\Debug-windows-x86_64\$(ProjectName)")
@@ -87,20 +84,21 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\..\dependencies\glfw3\include;..\..\dependencies\glad\include;..\..\dependencies\imgui;..\..\dependencies\GLM\include;..\..\dependencies\stbs;..\..\dependencies\fmod;..\..\dependencies\spdlog\include;..\..\dependencies\entt;..\..\dependencies\cereal;..\..\dependencies\gzip;..\..\dependencies\tinyGLTF;..\..\dependencies\json;..\..\dependencies\bullet3\include;..\..\modules\FMODStudio\include;..\..\modules\NOU\include;..\..\modules\sampleModule\include;..\..\modules\toolkit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\..\dependencies\glfw3\include;..\..\dependencies\glad\include;..\..\dependencies\imgui;..\..\dependencies\GLM\include;..\..\dependencies\stbs;..\..\dependencies\fmod\include;..\..\dependencies\spdlog\include;..\..\dependencies\entt;..\..\dependencies\cereal;..\..\dependencies\gzip;..\..\dependencies\tinyGLTF;..\..\dependencies\json;..\..\dependencies\bullet3\include;..\..\modules\NOU\include;..\..\modules\sampleModule\include;..\..\modules\toolkit\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>fmodstudio_vc.lib; fmod_vc.lib;opengl32.lib;imagehlp.lib;..\..\dependencies\fmod\fmod64.lib;..\..\dependencies\gzip\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;imagehlp.lib;..\..\dependencies\gzip\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>(xcopy /Q /E /Y /I /C "$(SolutionDir)shared_assets\dll" "$(SolutionDir)bin\Release-windows-x86_64\$(ProjectName)")
@@ -114,26 +112,26 @@
     <ClInclude Include="src\AudioEngine.h" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Enemy.h" />
-    <ClInclude Include="src\Graphics\ITexture.h" />
-    <ClInclude Include="src\HitCheck.h" />
     <ClInclude Include="src\Gameplay\Camera.h" />
     <ClInclude Include="src\Gameplay\Transform.h" />
     <ClInclude Include="src\Graphics\IBuffer.h" />
+    <ClInclude Include="src\Graphics\ITexture.h" />
     <ClInclude Include="src\Graphics\IndexBuffer.h" />
+    <ClInclude Include="src\Graphics\MeshBuilder.h" />
+    <ClInclude Include="src\Graphics\ObjLoader.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
+    <ClInclude Include="src\Graphics\StringUtils.h" />
     <ClInclude Include="src\Graphics\Texture2D.h" />
     <ClInclude Include="src\Graphics\Texture2DData.h" />
     <ClInclude Include="src\Graphics\TextureEnums.h" />
     <ClInclude Include="src\Graphics\VertexArrayObject.h" />
     <ClInclude Include="src\Graphics\VertexBuffer.h" />
-    <ClInclude Include="src\Graphics\MeshBuilder.h" />
-    <ClInclude Include="src\Graphics\ObjLoader.h" />
-    <ClInclude Include="src\Graphics\StringUtils.h" />
     <ClInclude Include="src\Graphics\VertexTypes.h" />
-    <ClInclude Include="src\entt\entt.hpp" />
+    <ClInclude Include="src\HitCheck.h" />
     <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\stuff.h" />
     <ClInclude Include="src\UI.h" />
+    <ClInclude Include="src\entt\entt.hpp" />
+    <ClInclude Include="src\stuff.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AudioEngine.cpp" />
@@ -143,16 +141,16 @@
     <ClCompile Include="src\Gameplay\Transform.cpp" />
     <ClCompile Include="src\Graphics\IBuffer.cpp" />
     <ClCompile Include="src\Graphics\ITexture.cpp" />
+    <ClCompile Include="src\Graphics\ObjLoader.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Graphics\Texture2D.cpp" />
     <ClCompile Include="src\Graphics\Texture2DData.cpp" />
     <ClCompile Include="src\Graphics\VertexArrayObject.cpp" />
-    <ClCompile Include="src\Graphics\ObjLoader.cpp" />
     <ClCompile Include="src\Graphics\VertexTypes.cpp" />
-    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\stuff.cpp" />
     <ClCompile Include="src\UI.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\stuff.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\dependencies\glfw3\GLFW.vcxproj">
@@ -170,9 +168,6 @@
     <ProjectReference Include="..\..\dependencies\tinyGLTF\TinyGLTF.vcxproj">
       <Project>{76563D9D-6223-98A8-8B3C-86507768CD36}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\modules\FMODStudio\FMODStudio.vcxproj">
-      <Project>{A386D97E-8F3E-1BCC-F845-F427E41CB6BC}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\modules\NOU\NOU.vcxproj">
       <Project>{3709880B-A312-887C-2C8E-9E7C9896937C}</Project>
     </ProjectReference>
@@ -182,12 +177,6 @@
     <ProjectReference Include="..\..\modules\toolkit\toolkit.vcxproj">
       <Project>{AB7025F0-1750-A48B-2068-2F628CC60AED}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fmod.dll" />
-    <None Include="fmodL.dll" />
-    <None Include="fmodstudio.dll" />
-    <None Include="fmodstudioL.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

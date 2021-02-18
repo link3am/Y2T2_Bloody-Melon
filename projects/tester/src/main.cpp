@@ -106,13 +106,25 @@ void RenderVAO(const Shader::sptr& shader, const VertexArrayObject::sptr& vao, c
 
 
 
-int main()
+int main() 
 {
 	bool pause = false;
 	bool win = false;
 
-	int screen = 0; //0 = title screen, 1 = level 1
+	int screen = 0; //0 = title screen, 1 = level 1 
 
+
+	/// Fmod
+
+	AudioEngine& engine = AudioEngine::Instance();
+	engine.Init();
+	engine.LoadBank("Master");
+	AudioEvent& BGM = engine.CreateEvent1("Background Music", "{f165c66f-0811-48dd-82a9-b8d724e72698}");
+	AudioEvent& SE_shoot = engine.CreateEvent1("Shut", "{0daa9b74-0dd4-416e-9865-5121600bb80d}");
+	AudioEvent& SE_Jump = engine.CreateEvent1("Jump", "{d1d97e93-05c3-4482-8e04-0404dd8d2e7b}");
+	AudioEvent& SE_Die = engine.CreateEvent1("Die", "{a1e9ee3d-3842-4e4d-804a-1fc307347bae}");
+	BGM.Play();
+	///
 
 	vector<Enemy> EnemyList;
 	vector<Bullet> BulletList;
@@ -135,11 +147,6 @@ int main()
 
 
 	static entt::registry ecs;
-
-	//Setup FMOD
-	AudioEngine& engine = AudioEngine::Instance();
-	engine.Init(); 
-	engine.LoadBank("Master");
 
 
 	//////////////////////////////////////////mod and transform
@@ -266,7 +273,7 @@ int main()
 			glm::vec3(0.0f, 0.0f, 0.0f),
 			"images/pan UV.png");
 		stuffList.push_back(s8);
-	}
+	} 
 	
 	//////////////////////////////////////////camera
 	camera = Camera::Create();
@@ -304,6 +311,8 @@ int main()
 
 
 	while (!glfwWindowShouldClose(window)) {
+		engine.Update();
+
 		glfwPollEvents();
 		double thisFrame = glfwGetTime();
 		float dt = static_cast<float>(thisFrame - lastFrame);// delta time
@@ -323,7 +332,10 @@ int main()
 				{
 					it = UIList.erase(it);
 				}
+				//BGM.StopImmediately();
+				BGM.SetParameter("Loop 2", 1);
 			}
+			
 		}
 		else if (screen == 1) {
 			if (pause == false) {
@@ -384,11 +396,12 @@ int main()
 				//fps limit in this if()
 				if ((thisFrame - lastFrameTime) >= fpsLimit)
 				{
-					//player part
+					//player part 
 					if (!p1.IsDeath()) {
-						p1.phyUpdate(dt);
+						p1.phyUpdate(dt, SE_Jump);
 						camera->cameraMove(window, p1.getPlayervec3());
 						if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS && CanShoot) {
+							SE_shoot.Play();
 							if (p1.melonTrans->GetLocalScale().x > 0) {
 								Bullet b(BulletMod,
 									p1.melonTrans->GetLocalPosition(),
@@ -440,6 +453,7 @@ int main()
 							if (HitCheck::AABB(BulletList[x].getHitBox(), EnemyList[y].getHitBox())) {
 								BulletList[x].death = true;
 								EnemyList[y].death = true;
+								SE_Die.Play();
 							}
 						}
 					}
@@ -456,20 +470,25 @@ int main()
 		//Pause
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 			pause = true;
+			BGM.SetParameter("Loop 3", 1);
+			BGM.SetParameter("Loop 2", 0);
 			UI pauseUI(PauseTitle,
 				glm::vec3(p1.melonTrans->GetLocalPosition().x, p1.melonTrans->GetLocalPosition().y + 1.5, p1.melonTrans->GetLocalPosition().z + 2.5),
 				glm::vec3(0.0f, 0.0f, 0.0f),
 				glm::vec3(1.5f, 1.5f, -1.0f),
 				PauseTitleTex);
 			UIList.push_back(pauseUI);
+
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) { 
 			pause = false;
 			for (vector<UI>::iterator it = UIList.begin(); it != UIList.end();)
 			{
 				it = UIList.erase(it);
 			}
+			BGM.SetParameter("Loop 3", 0);
+			BGM.SetParameter("Loop 2", 1);
 		}
 		for (vector<UI>::iterator it = UIList.begin(); it != UIList.end();)
 		{
@@ -478,10 +497,10 @@ int main()
 		}
 		glfwSwapBuffers(window);
 	}
-
-
+	engine.Shutdown();
 	// Clean up the toolkit logger so we don't leak memory
 	Logger::Uninitialize();
+
 	return 0;
 } 
 

@@ -7,6 +7,8 @@
 #include <GLFW\glfw3.h>
 #include <Gameplay\Camera.h>
 #include "Graphics/Texture2D.h"
+#include <AudioEngine.h>
+
 class Player
 {
 public:
@@ -28,8 +30,8 @@ public:
 	//control
 	void glWindow(GLFWwindow* inWindow);
 
-	void control(float dt);
-	void phyUpdate(float dt);
+	void control(float dt, AudioEvent& SE);
+	void phyUpdate(float dt, AudioEvent& SE);
 	void mapping();
 	void blocker();
 	glm::vec3 getPlayervec3();
