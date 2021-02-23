@@ -22,6 +22,7 @@
 #include "Enemy.h"  
 #include "Bullet.h"
 #include "UI.h"
+#include "ObjClass.h"
 
 #include "Graphics/IBuffer.h"
 #include "Graphics/VertexBuffer.h"

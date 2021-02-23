@@ -67,6 +67,7 @@
       <Filter>entt</Filter>
     </ClInclude>
     <ClInclude Include="src\stuff.h" />
+    <ClInclude Include="src\ObjClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AudioEngine.cpp" />
@@ -106,5 +107,6 @@
     <ClCompile Include="src\UI.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\stuff.cpp" />
+    <ClCompile Include="src\ObjClass.cpp" />
   </ItemGroup>
 </Project>
