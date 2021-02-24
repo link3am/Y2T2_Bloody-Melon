@@ -42,6 +42,7 @@
 #include "HitCheck.h"
 //FMod
 #include "AudioEngine.h"
+
 using namespace std;
 
 void GlDebugMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
@@ -116,7 +117,7 @@ int main()
 
 
 	/// Fmod
-
+	
 	AudioEngine& engine = AudioEngine::Instance();
 	engine.Init();
 	engine.LoadBank("Master");
@@ -232,7 +233,7 @@ int main()
 		Stuff deskTop("mapping.obj",
 			glm::vec3(0.0f, 0.0f, 0.0f),
 			glm::vec3(0.0f, 0.0f, 0.0f),
-			"images/table UV.jpg");
+			"images/table UV.png");
 		stuffList.push_back(deskTop);
 		Stuff s1("clock.obj",
 			glm::vec3(2.0f, 0.0f, -0.7f),
@@ -278,7 +279,7 @@ int main()
 	
 	//////////////////////////////////////////camera
 	camera = Camera::Create();
-	glm::vec3 cameraPosition = glm::vec3(0, 3, 7);
+	glm::vec3 cameraPosition = glm::vec3(0, 2.5, 6);
 	camera->SetPosition(cameraPosition); // Set initial position
 	camera->SetUp(glm::vec3(0, 1, 0)); // Use a z-up coordinate system
 	camera->LookAt(glm::vec3(0.0f, 1.0f, 0.0f)); // Look at center of the screen
@@ -312,8 +313,8 @@ int main()
 
 
 	while (!glfwWindowShouldClose(window)) {
-		engine.Update();
-
+		//engine.Update();
+		
 		glfwPollEvents();
 		double thisFrame = glfwGetTime();
 		float dt = static_cast<float>(thisFrame - lastFrame);// delta time
@@ -334,7 +335,7 @@ int main()
 					it = UIList.erase(it);
 				}
 				//BGM.StopImmediately();
-				BGM.SetParameter("Loop 2", 1);
+				//BGM.SetParameter("Loop 2", 1);
 			}
 			
 		}
@@ -344,19 +345,15 @@ int main()
 
 				glClearColor(0.08f, 0.17f, 0.31f, 1.0f);
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
 				//shader
 				//Lv1.levelRender(camera);
 				for (int s = 0; s < stuffList.size(); s++) {
-					stuffList[s].Render(camera);
-
+					stuffList[s].Render(camera, glm::vec3(1.3f,2.0f,0.0f),camera->GetPosition());
 				}
-
+				//p1.getPlayervec3()
 				//
 				if (!p1.IsDeath()) {
 					p1.Render(camera);
-					//p1.blocker();
 					if (win == true) {
 						UIList[0].Render(camera);
 					}
@@ -471,8 +468,8 @@ int main()
 		//Pause
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 			pause = true;
-			BGM.SetParameter("Loop 3", 1);
-			BGM.SetParameter("Loop 2", 0);
+			//BGM.SetParameter("Loop 3", 1);
+			//BGM.SetParameter("Loop 2", 0);
 			UI pauseUI(PauseTitle,
 				glm::vec3(p1.melonTrans->GetLocalPosition().x, p1.melonTrans->GetLocalPosition().y + 1.5, p1.melonTrans->GetLocalPosition().z + 2.5),
 				glm::vec3(0.0f, 0.0f, 0.0f),
@@ -488,8 +485,8 @@ int main()
 			{
 				it = UIList.erase(it);
 			}
-			BGM.SetParameter("Loop 3", 0);
-			BGM.SetParameter("Loop 2", 1);
+			//BGM.SetParameter("Loop 3", 0);
+			//BGM.SetParameter("Loop 2", 1);
 		}
 		for (vector<UI>::iterator it = UIList.begin(); it != UIList.end();)
 		{
@@ -498,7 +495,7 @@ int main()
 		}
 		glfwSwapBuffers(window);
 	}
-	engine.Shutdown();
+	//engine.Shutdown();
 	// Clean up the toolkit logger so we don't leak memory
 	Logger::Uninitialize();
 

@@ -61,13 +61,13 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\HitCheck.h" />
+    <ClInclude Include="src\ObjClass.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\UI.h" />
     <ClInclude Include="src\entt\entt.hpp">
       <Filter>entt</Filter>
     </ClInclude>
     <ClInclude Include="src\stuff.h" />
-    <ClInclude Include="src\ObjClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AudioEngine.cpp" />
@@ -103,10 +103,10 @@
     <ClCompile Include="src\Graphics\VertexTypes.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\ObjClass.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\UI.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\stuff.cpp" />
-    <ClCompile Include="src\ObjClass.cpp" />
   </ItemGroup>
 </Project>

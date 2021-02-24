@@ -16,7 +16,7 @@ public:
 	);
 	
 
-	void Render(Camera::sptr cam);
+	void Render(Camera::sptr cam, glm::vec3 lightpos, glm::vec3 camerapos);
 
 
 	Transform::sptr stuffTrans = nullptr;
@@ -24,5 +24,7 @@ public:
 	Shader::sptr stuffShader = nullptr;
 
 	Texture2D::sptr stuffTex = nullptr;
+
+
 
 };

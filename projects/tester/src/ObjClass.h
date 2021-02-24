@@ -25,5 +25,6 @@ public:
 	Transform::sptr ObjTrans = nullptr;
 	VertexArrayObject::sptr ObjModel = nullptr;
 	Shader::sptr ObjShader = nullptr;
+
 	Texture2D::sptr ObjTex = nullptr;
 };

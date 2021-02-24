@@ -19,7 +19,7 @@ Enemy::Enemy(std::string EM,
 
 	enemyShader = Shader::Create();
 	enemyShader->LoadShaderPartFromFile("shaders/vertex_shader.glsl", GL_VERTEX_SHADER);
-	enemyShader->LoadShaderPartFromFile("shaders/frag_blinn_phong_textured.glsl", GL_FRAGMENT_SHADER);
+	enemyShader->LoadShaderPartFromFile("shaders/base_frag.glsl", GL_FRAGMENT_SHADER);
 	enemyShader->Link();
 
 	enemyTex = Texture2D::LoadFromFile(enemyUV);

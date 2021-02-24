@@ -20,7 +20,7 @@ Player::Player(std::string MM,
 
 	melonShader = Shader::Create();
 	melonShader->LoadShaderPartFromFile("shaders/vertex_shader.glsl", GL_VERTEX_SHADER);
-	melonShader->LoadShaderPartFromFile("shaders/frag_blinn_phong_textured.glsl", GL_FRAGMENT_SHADER);
+	melonShader->LoadShaderPartFromFile("shaders/base_frag.glsl", GL_FRAGMENT_SHADER);
 	melonShader->Link();
 
 	melonTex = Texture2D::LoadFromFile(melonUV);
@@ -86,7 +86,7 @@ void Player::control(float dt, AudioEvent& SE)
 void Player::phyUpdate(float dt,AudioEvent& SE)
 {
 	mapping();
-
+	std::cout << pos.x<< "  "<<pos.y <<std::endl;
 	control(dt,SE);
 	blocker();
 	pos = melonTrans->GetLocalPosition();
@@ -106,14 +106,10 @@ void Player::phyUpdate(float dt,AudioEvent& SE)
 		//test 
 		isGround = false;
 		position += acceleration * dt * dt;
-		std::cout << dt << std::endl;
 
 	}
 
 	melonTrans->MoveLocalFixed(0.0f, position, 0.0f);
-
-
-	//std::cout << pos.x << std::endl;
 
 	if (pos.y <= -5 || death ==true)
 	{
@@ -126,7 +122,6 @@ void Player::mapping()
 	if (pos.x > 5.0f && pos.x < 11.0f && pos.y >= 3.9f)
 	{
 		groundHight = 4.0f;
-
 	}
 	else if (pos.x > 1.0f && pos.x < 3.0f && pos.y >= 1.9f)
 	{
@@ -135,12 +130,10 @@ void Player::mapping()
 	else if (pos.x > 12.0f && pos.x < 18.0f && pos.y >= 2.9f)
 	{
 		groundHight = 3.0f;
-
 	}
 	else if (pos.x > 19.0f && pos.x < 19.8f && pos.y >= 1.4f)
 	{
 		groundHight = 1.5f;
-
 	}
 	else if (pos.x > 21.5f && pos.x < 23.5f && pos.y >= 0.9f)
 	{
@@ -149,14 +142,11 @@ void Player::mapping()
 	else if (pos.x > 25.6f && pos.x < 26.4f && pos.y >= 1.4f)
 	{//can
 		groundHight = 1.5f;
-
 	}
 	else if (pos.x > 30.7f && pos.x < 32.4f && pos.y >= 0.6f)
 	{
 		groundHight = 0.7f;
-
 	}
-
 	else if (pos.x > 42.0f || pos.x < -3)
 	{
 		groundHight = -10.0f;
